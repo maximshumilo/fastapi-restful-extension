@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from pytest import fixture
 
-from fastapi_restful import Resource, Api
+from fastapi_restful import Resource, RestAPI
 
 app = FastAPI()
 
@@ -20,5 +20,5 @@ def fastapi_test_client():
 
 
 @fixture
-def api_for_test():
-    return Api(app)
+def rest_api_for_test():
+    return RestAPI(app)
