@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='fastapi-restful-extension',
-    version='0.1.0',
+    version='0.2.0',
     author="Shumilo Maxim",
     author_email="shumilo.mk@gmail.com",
     description='Extension for make RESTful interfaces with FastAPI.',
