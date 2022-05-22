@@ -2,17 +2,23 @@
 
 name: Publish
 
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-   tags:        
-      - '*' 
+on: [push]
+
+
+# on:
+#   push:
+#    tags:        
+#       - '*' 
 
 jobs:
   pubish:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
+      - name: Setup Python
+        uses: actions/setup-python@master
+        with:
+          python-version: 3.9
       - name: Build package
         run: |
           pip install --upgrade pip
