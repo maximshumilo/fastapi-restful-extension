@@ -1,8 +1,8 @@
 from .resource import Resource
-from .main import Api
+from .api import RestAPI
 
 
 __all__ = [
-    'Api',
+    'RestAPI',
     'Resource'
 ]
