@@ -1,5 +1,5 @@
-from resource import Resource
-from main import Api
+from .resource import Resource
+from .main import Api
 
 
 __all__ = [

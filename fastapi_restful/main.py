@@ -2,7 +2,7 @@ from typing import Type
 
 from fastapi import FastAPI
 
-from resource import Resource
+from .resource import Resource
 
 
 class Api:

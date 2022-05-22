@@ -3,7 +3,7 @@ from typing import List, Callable, Tuple, Dict, Any
 
 from fastapi import APIRouter, HTTPException, params
 
-from utils import is_overridden_func
+from .utils import is_overridden_func
 
 
 class ManageSignature:
