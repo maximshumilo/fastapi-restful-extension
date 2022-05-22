@@ -88,10 +88,10 @@ class HTTPMethods:
         )
         return list(filter_obj)
 
-    def head(self):
+    def head(self, **kwargs):
         raise HTTPException(status_code=405, detail="Method Not Allowed")
 
-    def options(self):
+    def options(self, **kwargs):
         raise HTTPException(status_code=405, detail="Method Not Allowed")
 
     def get(self, **kwargs):
@@ -100,13 +100,13 @@ class HTTPMethods:
     def post(self, **kwargs):
         raise HTTPException(status_code=405, detail="Method Not Allowed")
 
-    def patch(self):
+    def patch(self, **kwargs):
         raise HTTPException(status_code=405, detail="Method Not Allowed")
 
-    def put(self):
+    def put(self, **kwargs):
         raise HTTPException(status_code=405, detail="Method Not Allowed")
 
-    def delete(self):
+    def delete(self, **kwargs):
         raise HTTPException(status_code=405, detail="Method Not Allowed")
 
 
