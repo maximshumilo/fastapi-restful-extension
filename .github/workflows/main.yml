@@ -1,4 +1,4 @@
-name: Example workflow for Codecov
+name: Test
 on: [push]
 jobs:
   run:
@@ -17,18 +17,19 @@ jobs:
         python-version: 3.9
     - name: Generate coverage report
       run: |
-        ls
+        pip install --upgrade pip
+        pip install fastapi requests
         pip install pytest
         pip install pytest-cov
         pytest --cov=./fastapi_restful --cov-report=xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
-        directory: ./coverage/reports/
+        token: ${{ secrets.CODECOV_TOKEN }}
+        directory: ./
         env_vars: OS,PYTHON
         fail_ci_if_error: true
-        files: ./coverage1.xml,./coverage2.xml
+        files: ./coverage.xml
         flags: unittests
         name: codecov-umbrella
-        path_to_write_report: ./coverage/codecov_report.txt
         verbose: true
