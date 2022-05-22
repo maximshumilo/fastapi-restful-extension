@@ -1,5 +1,3 @@
-# FastAPI-RESTful-extension
-
 <p align="center">
-    <em>FastAPI extension that allows you to easily create a RESTful API</em>
+    <em>FastAPI-RESTful-extension - FastAPI extension that allows you to easily create a RESTful API</em>
 </p>
