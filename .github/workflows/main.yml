@@ -17,7 +17,8 @@ jobs:
         python-version: 3.9
     - name: Generate coverage report
       run: |
-        ls
+        pip install --upgrade pip
+        pip install fastapi
         pip install pytest
         pip install pytest-cov
         pytest --cov=./fastapi_restful --cov-report=xml
