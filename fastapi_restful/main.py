@@ -2,13 +2,13 @@ from typing import Type
 
 from fastapi import FastAPI
 
-from .resource import Resource
+from resource import Resource
 
 
 class Api:
     """A class for create RESTfull-API."""
 
-    fastapi: FastAPI
+    fastapi: FastAPI = None
 
     def __init__(self, fastapi_app: FastAPI = None):
         if fastapi_app is not None:

@@ -9,9 +9,7 @@ from utils import is_overridden_func
 class ManageSignature:
     """A class for interacting with a function signature."""
 
-    @property
-    def _required_args(self):
-        raise NotImplementedError
+    _required_args: List[str]
 
     @staticmethod
     def __get_kwargs__(func: Callable) -> Dict[str, Any]:
@@ -49,7 +47,6 @@ class ManageSignature:
 
         def new_func(*args, **kwargs):
             return func(*args, **kwargs)
-
         sign = signature(func)
         new_params = self.__gen_new_params__(sign)
         new_func.__signature__ = sign.replace(parameters=new_params)

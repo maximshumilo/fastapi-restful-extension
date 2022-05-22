@@ -3,5 +3,6 @@ build
 dist
 fastapi_restful_extension.egg-info
 .idea
+.pytest_cache
 setup.py
 requirements.txt
