@@ -2,5 +2,6 @@ venv
 build
 dist
 fastapi_restful_extension.egg-info
+.idea
 setup.py
 requirements.txt
