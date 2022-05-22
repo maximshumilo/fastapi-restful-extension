@@ -6,6 +6,7 @@ from .resource import Resource
 
 
 class Api:
+    """A class for create RESTfull-API."""
 
     fastapi: FastAPI
 
@@ -27,6 +28,18 @@ class Api:
         """
         self.fastapi = fastapi_app
 
-    def add_resource(self, resource: Type[Resource], url: str = None) -> None:
-        res = resource(url)
+    def add_resource(self, resource: Type[Resource], path: str = None) -> None:
+        """
+        Initial resource and add resource router to FastAPI.
+
+        Parameters
+        ----------
+        resource: Type of Resource
+        path: Resource path
+
+        Returns
+        -------
+        None
+        """
+        res = resource(path)
         self.fastapi.include_router(res.router)

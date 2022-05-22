@@ -46,6 +46,7 @@ class ManageSignature:
         -------
         New function with new signature.
         """
+
         def new_func(*args, **kwargs):
             return func(*args, **kwargs)
 
