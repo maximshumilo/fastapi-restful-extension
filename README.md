@@ -3,7 +3,7 @@
         <img src="https://github.com/maximshumilo/fastapi-restful-extension/actions/workflows/test.yml/badge.svg">
     </a>
     <a href="https://codecov.io/gh/maximshumilo/fastapi-restful-extension">
-        <img src="https://codecov.io/gh/maximshumilo/fastapi-restful-extension/branch/master/graph/badge.svg?token=ZAU44DIGQJ"/>
+        <img src="https://img.shields.io/codecov/c/gh/maximshumilo/fastapi-restful-extension?color=%2378c55b"/>
     </a>
     <a href="https://pypi.org/project/fastapi-restful-extension/" target="_blank">
         <img src="https://img.shields.io/pypi/v/fastapi-restful-extension?color=%2374c954">

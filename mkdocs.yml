@@ -1,0 +1,29 @@
+site_name: FastAPI-RESTful-Extension
+site_description: FastAPI-RESTful-Extension
+site_url: https://maximshumilo.github.io/fastapi-restful-extension/
+
+
+repo_name: fastapi-restful-extension
+repo_url: https://github.com/maximshumilo/fastapi-restful-extension
+
+nav:
+  - Description: 'index.md'
+  - Installation: 'index.md'
+  - User Guide:
+      - Quickstart: 'index.md'
+      - Class RestAPI: 'index.md'
+      - Class APIVersion: 'index.md'
+      - Class Resource: 'index.md'
+  - Get Help: 'index.md'
+  - Development - Contributing: 'index.md'
+  - Release Notes: 'release-notes.md'
+
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: 'https://github.com/maximshumilo/'
+    - icon: fontawesome/brands/python
+      link: 'https://pypi.org/project/fastapi-restful-extension/'
+    - icon: fontawesome/brands/telegram
+      link: 'https://t.me/maximshumilo'
