@@ -21,8 +21,10 @@ jobs:
     - name: Generate coverage report
       run: |
         pip install --upgrade pip
-        pip install fastapi requests
+        pip install fastapi
+        pip install requests
         pip install pytest
+        pip install pytest-asyncio
         pip install pytest-cov
         pytest --cov=./fastapi_restful --cov-report=xml
     - name: Upload coverage to Codecov
