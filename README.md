@@ -12,7 +12,7 @@
 </p>
 
 ---
-**Source code**: <a href="https://github.com/maximshumilo/fastapi-restful-extension" target="_blank">https://github.com/maximshumilo/fastapi-restful-extension </a>
+**Documentation**: <a href="https://maximshumilo.github.io/fastapi-restful-extension/" target="_blank">https://maximshumilo.github.io/fastapi-restful-extension/ </a>
 
 **Pypi package**: <a href="https://pypi.org/project/fastapi-restful-extension/" target="_blank">https://pypi.org/project/fastapi-restful-extension/ </a>
 
