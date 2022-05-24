@@ -2,6 +2,13 @@ site_name: FastAPI-RESTful-Extension
 site_description: FastAPI-RESTful-Extension
 site_url: https://maximshumilo.github.io/fastapi-restful-extension/
 
+theme:
+  name: 'material'
+  palette:
+    primary: 'green'
+    accent: 'orange'
+  logo: 'img/icon-white.svg'
+  favicon: 'img/favicon.png'
 
 repo_name: fastapi-restful-extension
 repo_url: https://github.com/maximshumilo/fastapi-restful-extension
