@@ -1,5 +1,5 @@
 import pytest
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 
 
 def test_init_resource_default_tag(resource_for_test):
@@ -49,13 +49,6 @@ def test_resource_required_args_in_path(resource_for_test):
     assert instance._required_args == ['path_arg']
 
 
-def test_not_implemented_method(resource_for_test):
-    instance = resource_for_test()
-    for method in instance._HTTP_METHODS:
-        func = getattr(instance, method)
-        pytest.raises(HTTPException, func)
-
-
 def test_execute_func_with_new_signature(resource_for_test):
     output = {}
 
@@ -66,3 +59,16 @@ def test_execute_func_with_new_signature(resource_for_test):
     instance = resource_for_test()
     new_func = instance.__replace_signature__(instance.get)
     assert new_func() == output
+
+
+@pytest.mark.asyncio
+async def test_execute_func_with_new_signature_async(resource_for_test):
+    output = {}
+
+    async def get(self, **kwargs):
+        return output
+
+    resource_for_test.get = get
+    instance = resource_for_test()
+    new_func = instance.__replace_signature__(instance.get)
+    assert await new_func() == output

@@ -1,7 +1,7 @@
-from inspect import getmembers, ismethod, Parameter, Signature, signature
+from inspect import getmembers, ismethod, Parameter, Signature, signature, iscoroutinefunction
 from typing import List, Callable, Tuple, Dict, Any
 
-from fastapi import APIRouter, HTTPException, params
+from fastapi import APIRouter
 
 from .utils import is_overridden_func
 
@@ -12,10 +12,9 @@ class ManageSignature:
     _required_args: List[str]
 
     @staticmethod
-    def __get_kwargs__(func: Callable) -> Dict[str, Any]:
+    def __get_route_kwargs__(func: Callable) -> Dict[str, Any]:
         """
-        Get keyword names and default values from func.
-        Skip item If default value is Query instance of FastAPI.
+        Get default values of route_kwargs from func.
 
         Parameters
         ----------
@@ -26,15 +25,14 @@ class ManageSignature:
         Kwargs
         """
         sign = signature(func)
-        return {
-            k: v.default
-            for k, v in sign.parameters.items()
-            if v.default is not Parameter.empty and not isinstance(v.default, params.Query)
-        }
+        res = next(filter(lambda x: x.name == 'route_kwargs', sign.parameters.values()), {})
+        if res:
+            return res.default
+        return res
 
     def __replace_signature__(self, func: Callable) -> Callable:
         """
-        Decorator for set new signature.
+        Replace signature of func.
 
         Parameters
         ----------
@@ -45,14 +43,20 @@ class ManageSignature:
         New function with new signature.
         """
 
-        def new_func(*args, **kwargs):
+        def route_handler(*args, **kwargs):
             return func(*args, **kwargs)
+
+        async def async_route_handler(*args, **kwargs):
+            return await func(*args, **kwargs)
+
+        new_func = async_route_handler if iscoroutinefunction(func) else route_handler
         sign = signature(func)
         new_params = self.__gen_new_params__(sign)
         new_func.__signature__ = sign.replace(parameters=new_params)
         return new_func
 
-    def __gen_new_params__(self, sign: Signature) -> List[Parameter]:
+    @staticmethod
+    def __gen_new_params__(sign: Signature) -> List[Parameter]:
         """
         Generate list with new params for signature.
 
@@ -65,9 +69,7 @@ class ManageSignature:
         List with new params.
         """
         old_params = list(sign.parameters.values())
-        new_params = [p.replace(kind=Parameter.POSITIONAL_OR_KEYWORD) for p in old_params
-                      if p.name in self._required_args or isinstance(p.default, params.Query)]
-        return new_params
+        return [p.replace(kind=Parameter.POSITIONAL_OR_KEYWORD) for p in old_params if p.name != 'route_kwargs']
 
 
 class HTTPMethods:
@@ -88,26 +90,19 @@ class HTTPMethods:
         )
         return list(filter_obj)
 
-    def head(self, **kwargs):
-        raise HTTPException(status_code=405, detail="Method Not Allowed")
+    def head(self, **kwargs): ...
 
-    def options(self, **kwargs):
-        raise HTTPException(status_code=405, detail="Method Not Allowed")
+    def options(self, **kwargs): ...
 
-    def get(self, **kwargs):
-        raise HTTPException(status_code=405, detail="Method Not Allowed")
+    def get(self, **kwargs): ...
 
-    def post(self, **kwargs):
-        raise HTTPException(status_code=405, detail="Method Not Allowed")
+    def post(self, **kwargs): ...
 
-    def patch(self, **kwargs):
-        raise HTTPException(status_code=405, detail="Method Not Allowed")
+    def patch(self, **kwargs): ...
 
-    def put(self, **kwargs):
-        raise HTTPException(status_code=405, detail="Method Not Allowed")
+    def put(self, **kwargs): ...
 
-    def delete(self, **kwargs):
-        raise HTTPException(status_code=405, detail="Method Not Allowed")
+    def delete(self, **kwargs): ...
 
 
 class Resource(HTTPMethods, ManageSignature):
@@ -155,9 +150,10 @@ class Resource(HTTPMethods, ManageSignature):
         None
         """
         for method, handler in self._get_route_handlers():
-            kwargs = self.__get_kwargs__(handler)
+            kwargs = {"summary": method}
+            kwargs.update(self.__get_route_kwargs__(handler))
             route_handler = self.__replace_signature__(handler)
-            self.router.add_api_route(path='', endpoint=route_handler, methods=[method], **kwargs)
+            self.router.add_api_route(path='', endpoint=route_handler, methods=[method.capitalize()], **kwargs)
 
     @property
     def _required_args(self) -> List[str]:

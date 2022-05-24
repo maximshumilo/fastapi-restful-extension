@@ -7,8 +7,14 @@ from fastapi_restful import RestAPI
 def test_init_rest_api():
     app = FastAPI()
     api = RestAPI(fastapi_app=app)
-    assert api.fastapi is app
+    assert api._fastapi is app
     assert api.router.prefix == '/api'
+
+
+def test_init_rest_api_empty_default_prefix():
+    app = FastAPI()
+    api = RestAPI(fastapi_app=app, prefix=None)
+    assert api._fastapi is app
 
 
 def test_add_resource(resource_for_test, rest_api_for_test):
@@ -38,15 +44,25 @@ def test_get_version_by_prefix(rest_api_for_test):
 def test_str_of_instance(rest_api_for_test):
     prefix = '/v1'
     api = rest_api_for_test.create_version(prefix)
-    assert str(api) == f'API: {prefix}'
+    assert str(api) == prefix
 
 
 def test_url_map(rest_api_for_test, resource_for_test):
-    def get(self, **kwargs):
+    def get(self):
         return {}
     resource_for_test.get = get
     resource_prefix = '/test'
     rest_api_for_test.add_resource(resource_for_test, resource_prefix)
     base_prefix = rest_api_for_test.router.prefix
     path = f'{base_prefix}{resource_prefix}'
-    assert rest_api_for_test.url_map.get(path) is not None
+    assert rest_api_for_test.urls.get(path) is not None
+
+
+def test_apply(rest_api_for_test, resource_for_test):
+    def get(self):
+        return {}
+    resource_for_test.get = get
+    v1 = rest_api_for_test.create_version('v1')
+    v1.add_resource(resource_for_test, '/test')
+    rest_api_for_test.apply()
+    assert True

@@ -1,8 +1,9 @@
-from .resource import Resource
 from .api import RestAPI
-
+from .resource import Resource
+from .utils import route_settings
 
 __all__ = [
     'RestAPI',
-    'Resource'
+    'Resource',
+    'route_settings'
 ]
