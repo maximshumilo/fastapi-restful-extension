@@ -1,5 +1,10 @@
 ## Changelog
 
+## 0.3.0
+- Add decorator route_settings
+- Add method apply for class RestAPI
+- Fix bugs and update logic init API
+
 ## 0.2.0
 - Rename Api class to RestAPI
 - Add APIMixin
