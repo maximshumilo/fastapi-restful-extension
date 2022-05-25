@@ -7,7 +7,7 @@ setup(
     author_email="shumilo.mk@gmail.com",
     description='Extension for make RESTful interfaces with FastAPI.',
     long_description="",
-    install_requires=['fastapi~=0.78.0', 'setuptools~=62.3.2'],
+    install_requires=['fastapi~=0.78.0', 'setuptools'],
     packages=find_packages(),
     include_package_data=True,
     url='https://github.com/maximshumilo/fastapi-restful-extension',
