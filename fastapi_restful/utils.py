@@ -1,4 +1,5 @@
 from inspect import Parameter, signature
+from typing import Callable
 
 
 def is_overridden_func(target_func) -> bool:
@@ -18,7 +19,19 @@ def is_overridden_func(target_func) -> bool:
     return target_func.__func__ != func_of_parent.__func__
 
 
-def route_settings(**kwargs):
+def route_settings(**kwargs) -> Callable:
+    """
+    Decorator for forwarding 'kwargs' to the 'add_api_route' method of the 'APIRouter` instance.
+
+    Parameters
+    ----------
+    kwargs: Kwargs for add_api_route.
+            See descriptions for all kwargs in `fastapi.APIRouter.add_api_route`.
+
+    Returns
+    -------
+    Func with new signature.
+    """
     def decorator(func):
         route_kwargs_param = Parameter(name='route_kwargs', kind=Parameter.POSITIONAL_OR_KEYWORD, default=kwargs)
         sign = signature(func)

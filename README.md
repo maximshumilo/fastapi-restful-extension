@@ -3,14 +3,69 @@
         <img src="https://github.com/maximshumilo/fastapi-restful-extension/actions/workflows/test.yml/badge.svg">
     </a>
     <a href="https://codecov.io/gh/maximshumilo/fastapi-restful-extension">
-        <img src="https://codecov.io/gh/maximshumilo/fastapi-restful-extension/branch/master/graph/badge.svg?token=ZAU44DIGQJ"/>
+        <img src="https://img.shields.io/codecov/c/gh/maximshumilo/fastapi-restful-extension?color=31c955"/>
     </a>
     <a href="https://pypi.org/project/fastapi-restful-extension/" target="_blank">
-        <img src="https://img.shields.io/pypi/v/fastapi-restful-extension?color=%2374c954">
+        <img src="https://img.shields.io/pypi/v/fastapi-restful-extension?color=31c955&label=pypi%20package">
     </a>
-    <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/fastapi-restful-extension?color=%2378c55b">
+    <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/fastapi-restful-extension?color=31c955">
 </p>
 
 <p align="center">
-    <em>fastapi-restful-extension - FastAPI extension that allows you to easily create a RESTful API</em>
+    FastAPI-RESTful-Extension - is extension for FastAPI that allows you to easily create a REST API.
 </p>
+
+---
+
+**Documentation**: <a href="https://maximshumilo.github.io/fastapi-restful-extension/" target="_blank">https://maximshumilo.github.io/fastapi-restful-extension/ </a>
+
+**PyPI**: <a href="https://pypi.org/project/fastapi-restful-extension/" target="_blank">https://pypi.org/project/fastapi-restful-extension/ </a>
+
+---
+
+# Installation
+
+FastAPI-RESTful-Extension has the following dependencies:
+
+- FastAPI <= `0.78.0`
+- Python version: `3.6, 3.7, 3.8, 3.9` or `3.10`
+
+---
+
+### From PyPI
+Install package with pip from `pypi.org`
+
+```console
+$ pip install fastapi-restful-extension
+
+Collecting fastapi-restful-extension
+  Downloading fastapi_restful_extension-0.3.0-py3-none-any.whl (8.0 kB)
+...
+...
+...
+Installing collected packages: fastapi-restful-extension
+Successfully installed fastapi-restful-extension-0.3.0
+```
+
+---
+
+### From sources
+Install package with pip from sources
+
+```console
+$ git clone https://github.com/maximshumilo/fastapi-restful-extension.git
+$ pip install ./fastapi-restful-extension
+
+Processing ./fastapi-restful-extension
+    Preparing metadata (setup.py) ... done
+...
+...
+...
+Successfully built fastapi-restful-extension
+Installing collected packages: fastapi-restful-extension
+  Attempting uninstall: fastapi-restful-extension
+    Found existing installation: fastapi-restful-extension 0.3.0
+    Uninstalling fastapi-restful-extension-0.3.0:
+      Successfully uninstalled fastapi-restful-extension-0.3.0
+Successfully installed fastapi-restful-extension-0.3.0
+```
