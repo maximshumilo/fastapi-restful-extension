@@ -6,7 +6,7 @@
         <img src="https://img.shields.io/codecov/c/gh/maximshumilo/fastapi-restful-extension?color=31c955"/>
     </a>
     <a href="https://pypi.org/project/fastapi-restful-extension/" target="_blank">
-        <img src="https://img.shields.io/pypi/v/fastapi-restful-extension?color=31c955">
+        <img src="https://img.shields.io/pypi/v/fastapi-restful-extension?color=31c955&label=pypi%20package">
     </a>
     <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/fastapi-restful-extension?color=31c955">
 </p>
@@ -32,7 +32,7 @@ FastAPI-RESTful-Extension has the following dependencies:
 
 ---
 
-### From pypi.org
+### From PyPI
 Install package with pip from `pypi.org`
 
 ```console
