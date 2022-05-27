@@ -11,13 +11,15 @@
     <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/fastapi-restful-extension?color=31c955">
 </p>
 
+<p align="center">
+    FastAPI-RESTful-Extension - is extension for FastAPI that allows you to easily create a REST API.
+</p>
+
 ---
+
 **Documentation**: <a href="https://maximshumilo.github.io/fastapi-restful-extension/" target="_blank">https://maximshumilo.github.io/fastapi-restful-extension/ </a>
 
 **Pypi package**: <a href="https://pypi.org/project/fastapi-restful-extension/" target="_blank">https://pypi.org/project/fastapi-restful-extension/ </a>
-
----
-FastAPI-RESTful-Extension - is extension for FastAPI that allows you to easily create a REST API.
 
 ---
 
