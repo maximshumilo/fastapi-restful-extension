@@ -5,8 +5,8 @@ FastAPI-RESTful-Extension has the following dependencies:
 
 ---
 
-### From pypi.org
-Install package with pip from `pypi.org`
+### From PyPI
+Install package with pip from PyPI
 
 ```console
 $ pip install fastapi-restful-extension

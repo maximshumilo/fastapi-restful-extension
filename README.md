@@ -19,7 +19,7 @@
 
 **Documentation**: <a href="https://maximshumilo.github.io/fastapi-restful-extension/" target="_blank">https://maximshumilo.github.io/fastapi-restful-extension/ </a>
 
-**Pypi package**: <a href="https://pypi.org/project/fastapi-restful-extension/" target="_blank">https://pypi.org/project/fastapi-restful-extension/ </a>
+**PyPI**: <a href="https://pypi.org/project/fastapi-restful-extension/" target="_blank">https://pypi.org/project/fastapi-restful-extension/ </a>
 
 ---
 

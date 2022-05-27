@@ -4,8 +4,6 @@ site_url: https://maximshumilo.github.io/fastapi-restful-extension/
 
 theme:
   name: 'material'
-  features:
-      - content.code.annotate
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -15,6 +13,8 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.details
   - admonition
+  - attr_list
+  - md_in_html
 
 repo_name: fastapi-restful-extension
 repo_url: https://github.com/maximshumilo/fastapi-restful-extension
@@ -23,13 +23,12 @@ nav:
   - Description: 'index.md'
   - Installation: 'installation.md'
   - User Guide:
-      - A Minimal API: 'user-guide/minimal-api.md'
+      - Minimal API: 'user-guide/minimal-api.md'
       - Versions API: 'user-guide/versions.md'
-      - Resourceful Routing: 'user-guide/resourceful.md'
+      - Routing: 'user-guide/resourceful.md'
       - Security: ''
-  - Get Help: ''
-  - Development: ''
-  - Release Notes: ''
+  - Get Help: 'get-help.md'
+  - Release Notes: 'release-notes.md'
 
 extra:
   social:

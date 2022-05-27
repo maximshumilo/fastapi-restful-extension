@@ -14,7 +14,12 @@
 ---
 **Source code**: <a href="https://github.com/maximshumilo/fastapi-restful-extension" target="_blank">https://github.com/maximshumilo/fastapi-restful-extension </a>
 
-**Pypi package**: <a href="https://pypi.org/project/fastapi-restful-extension/" target="_blank">https://pypi.org/project/fastapi-restful-extension/ </a>
+**PyPI**: <a href="https://pypi.org/project/fastapi-restful-extension/" target="_blank">https://pypi.org/project/fastapi-restful-extension/ </a>
 
 ---
-FastAPI-RESTful-Extension - is extension for FastAPI that allows you to easily create a REST API.
+FastAPI-RESTful-Extension - is extension for <a href="https://fastapi.tiangolo.com" target="_blank">FastAPI</a> that allows you to easily create a REST API.
+
+In this extension, the API is built using the Resource classes.
+They are built based on the capabilities of <a href="https://fastapi.tiangolo.com" target="_blank">FastAPI</a>, namely `APIRouter` and `Route`
+
+The Resource classes provide easy access to HTTP methods.
