@@ -9,7 +9,7 @@ def read(fname):
 
 setup(
     name='fastapi-restful-extension',
-    version='0.3.0',
+    version='0.3.1',
     author='Shumilo Maxim',
     author_email='shumilo.mk@gmail.com',
     description='Extension for make RESTful interfaces with FastAPI.',
