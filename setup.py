@@ -13,6 +13,7 @@ setup(
     author='Shumilo Maxim',
     author_email='shumilo.mk@gmail.com',
     description='Extension for make RESTful interfaces with FastAPI.',
+    long_description_content_type="text/markdown",
     long_description=read('README.md'),
     install_requires=['fastapi~=0.78.0', 'setuptools'],
     packages=find_packages(),
