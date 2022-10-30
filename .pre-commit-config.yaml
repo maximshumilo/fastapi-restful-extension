@@ -2,8 +2,13 @@ repos:
 
 - repo: local
   hooks:
-    - id: flake8
-      name: flake8
+    - id: linters
+      name: linters
       entry: ./scripts/run_linters
+      language: system
+      types: [ python ]
+    - id: tests
+      name: tests
+      entry: ./scripts/run_tests
       language: system
       types: [ python ]
