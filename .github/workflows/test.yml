@@ -23,7 +23,7 @@ jobs:
         pip install --upgrade pip
         pip install poetry
         poetry install
-        pytest --cov=./fastapi_restful --cov-report=xml
+        poetry run pytest --cov=./fastapi_restful --cov-report=xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
