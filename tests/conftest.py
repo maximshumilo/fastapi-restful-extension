@@ -11,6 +11,7 @@ app = FastAPI()
 def resource_for_test():
     class TestResource(Resource):
         pass
+
     return TestResource
 
 

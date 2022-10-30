@@ -1,6 +1,6 @@
-from typing import Type, Optional, Dict, Union
+from typing import Dict, Optional, Type, Union
 
-from fastapi import FastAPI, APIRouter
+from fastapi import APIRouter, FastAPI
 
 from .resource import Resource
 
@@ -10,7 +10,7 @@ class APIMixin:
 
     @staticmethod
     def _strip_prefix(prefix: Optional[str]) -> str:
-        return prefix.strip('/') if prefix is not None else ''
+        return prefix.strip("/") if prefix is not None else ""
 
     @property
     def urls(self) -> dict:
@@ -51,7 +51,7 @@ class APIVersion(APIMixin):
 
     def __init__(self, version_prefix: str):
         prefix = self._strip_prefix(version_prefix)
-        self.router = APIRouter(prefix=f'/{prefix}')
+        self.router = APIRouter(prefix=f"/{prefix}")
 
     def __str__(self) -> str:
         return self.router.prefix
@@ -59,13 +59,14 @@ class APIVersion(APIMixin):
 
 class RestAPI(APIMixin):
     """Main class for create RESTful-API."""
+
     router: Union[APIRouter, FastAPI]
 
     _fastapi: FastAPI
     _prefix: str
     _versions: Dict[str, APIVersion]
 
-    def __init__(self, fastapi_app: FastAPI, prefix: Optional[str] = '/api'):
+    def __init__(self, fastapi_app: FastAPI, prefix: Optional[str] = "/api"):
         """
         Init class.
 
@@ -92,7 +93,7 @@ class RestAPI(APIMixin):
         Instance API or None
         """
         prefix = self._strip_prefix(item)
-        return self._versions.get(f'/{prefix}')
+        return self._versions.get(f"/{prefix}")
 
     def __init_router__(self) -> None:
         """
@@ -104,7 +105,7 @@ class RestAPI(APIMixin):
         """
         prefix = self._strip_prefix(self._prefix)
         if prefix:
-            router = APIRouter(prefix=f'/{prefix}')
+            router = APIRouter(prefix=f"/{prefix}")
         else:
             router = self._fastapi
         self.router = router
@@ -127,7 +128,7 @@ class RestAPI(APIMixin):
         APIVersion instance
         """
         if prefix in self._versions:
-            raise AssertionError(f'This version is exist: {prefix}')
+            raise AssertionError(f"This version is exist: {prefix}")
         api_spec_ver = APIVersion(prefix)
         self._versions[prefix] = api_spec_ver
         self.router.include_router(api_spec_ver.router)

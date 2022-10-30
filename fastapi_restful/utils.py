@@ -32,11 +32,13 @@ def route_settings(**kwargs) -> Callable:
     -------
     Func with new signature.
     """
+
     def decorator(func):
-        route_kwargs_param = Parameter(name='route_kwargs', kind=Parameter.POSITIONAL_OR_KEYWORD, default=kwargs)
+        route_kwargs_param = Parameter(name="route_kwargs", kind=Parameter.POSITIONAL_OR_KEYWORD, default=kwargs)
         sign = signature(func)
         old_params = list(sign.parameters.values())
         old_params.append(route_kwargs_param)
         func.__signature__ = sign.replace(parameters=old_params)
         return func
+
     return decorator

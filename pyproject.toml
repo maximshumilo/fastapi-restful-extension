@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "fastapi-restful-extension"
-version = "0.3.3"
+version = "0.4.0"
 description = "Extension for make RESTful interfaces with FastAPI."
 authors = [
     "Shumilo Maksim <shumilo.mk@gmail.com>",
@@ -57,3 +57,17 @@ pytest-asyncio = "^0.20"
 requests = "^2"
 Faker = "^15.0"
 flake8 = "^5.0"
+black = "^22.10"
+autoflake = "^1.4"
+isort = "^5.10"
+mypy = ">=0.971"
+
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+line_length = 120
+multi_line_output = 3
+combine_as_imports = true

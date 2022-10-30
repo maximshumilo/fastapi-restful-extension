@@ -8,7 +8,7 @@ def test_init_resource_default_tag(resource_for_test):
 
 
 def test_init_resource_custom_tag(resource_for_test):
-    custom_tag = 'Test custom tag'
+    custom_tag = "Test custom tag"
     resource_for_test.tag = custom_tag
     instance = resource_for_test()
     assert instance.tag == custom_tag
@@ -16,11 +16,11 @@ def test_init_resource_custom_tag(resource_for_test):
 
 def test_init_resource_default_path(resource_for_test):
     instance = resource_for_test()
-    assert instance.path == ''
+    assert instance.path == ""
 
 
 def test_init_resource_custom_path(resource_for_test):
-    custom_path = '/my/path'
+    custom_path = "/my/path"
     instance = resource_for_test(path=custom_path)
     assert instance.path == custom_path
 
@@ -45,8 +45,8 @@ def test_init_resource_include_methods(resource_for_test):
 
 
 def test_resource_required_args_in_path(resource_for_test):
-    instance = resource_for_test(path='/api/{path_arg}')
-    assert instance._required_args == ['path_arg']
+    instance = resource_for_test(path="/api/{path_arg}")
+    assert instance._required_args == ["path_arg"]
 
 
 def test_execute_func_with_new_signature(resource_for_test):
