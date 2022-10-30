@@ -4,6 +4,7 @@ from pytest import fixture
 from typing import Union
 
 
+
 from fastapi_restful import Resource, RestAPI
 
 app = FastAPI()
