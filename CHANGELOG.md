@@ -2,6 +2,7 @@
 
 ## 0.4.0
 - Add poetry
+- Add linters, formatters and pre-commit
 
 
 ## 0.3.0
