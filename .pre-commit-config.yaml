@@ -9,8 +9,18 @@ repos:
       entry: ./scripts/run_linters
       language: system
       types: [ python ]
+      stages: [ push ]
+
     - id: tests
       name: tests
       entry: ./scripts/run_tests
       language: system
       types: [ python ]
+      stages: [ push ]
+
+    - id: format
+      name: format
+      entry: ./scripts/run_formatters
+      language: system
+      types: [ python ]
+      stages: [push]
