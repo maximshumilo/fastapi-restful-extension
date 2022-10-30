@@ -7,4 +7,4 @@ repos:
       entry: flake8
       language: system
       types: [ python ]
-      args: [--max-line-length=120,--exclude=venv]
+      args: [--max-line-length=120,--exclude=.venv]
