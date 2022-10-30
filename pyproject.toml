@@ -1,0 +1,57 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "fastapi-restful-extension"
+version = "0.3.3"
+description = "Extension for make RESTful interfaces with FastAPI."
+authors = [
+    "Shumilo Maksim <shumilo.mk@gmail.com>",
+]
+readme = "README.md"
+license = "MIT"
+classifiers = [
+    "Framework :: FastAPI",
+    "Framework :: AsyncIO",
+    "Topic :: Internet",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+    "Topic :: Internet :: WWW/HTTP",
+    "Environment :: Web Environment",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+]
+packages = [
+    {include = "fastapi_restful"}
+]
+keywords = [
+    "fastapi",
+    "api",
+    "rest-api",
+    "async"
+]
+
+[tool.poetry.urls]
+Repository = "https://github.com/maximshumilo/fastapi-restful-extension"
+Homepage = "https://github.com/maximshumilo/fastapi-restful-extension"
+Documentation = "https://maximshumilo.github.io/fastapi-restful-extension/"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+fastapi = ">=0.78.0"
+
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.3"
+pytest-cov = "^4.0"
+Faker = "^15.0"
+flake8 = "^5.0"
