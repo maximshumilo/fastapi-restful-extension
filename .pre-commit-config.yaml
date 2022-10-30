@@ -4,7 +4,6 @@ repos:
   hooks:
     - id: flake8
       name: flake8
-      entry: flake8
+      entry: ./scripts/run_linters
       language: system
       types: [ python ]
-      args: [--max-line-length=120,--exclude=.venv]
