@@ -68,3 +68,10 @@ def test_apply(rest_api_for_test, resource_for_test):
     v1.add_resource(resource_for_test, "/test")
     rest_api_for_test.apply()
     assert True
+
+
+def test_call_http_methods(resource_for_test):
+    for method_name in resource_for_test._HTTP_METHODS:
+        method = getattr(resource_for_test, method_name)
+        assert method is not None
+        method(resource_for_test)
