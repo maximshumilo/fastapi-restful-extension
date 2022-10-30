@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -ex
+
+# Wait support setup.cfg - https://github.com/PyCQA/autoflake/pull/79.
+autoflake --recursive --in-place --remove-all-unused-imports fastapi_restful tests
+isort fastapi_restful tests
+black fastapi_restful tests
