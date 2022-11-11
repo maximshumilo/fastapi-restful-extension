@@ -3,7 +3,7 @@
 ## 0.4.2
 - Update `pyproject.toml`: remove `pre-commit` from root dependencies
 
-## 0.4.0
+## 0.4.1
 - Add poetry
 - Add linters, formatters and pre-commit
 - Refactor class APIVersion. 
