@@ -33,15 +33,17 @@ class APIMixin:
 
         Parameters
         ----------
-        resource: Type of Resource
-        path: Resource path
+        resource
+            Type of Resource
+        path
+            Resource path
 
         Returns
         -------
         None
         """
-        res = resource(path)
-        self.router.include_router(res.router)
+        resource_instance = resource(path)
+        self.router.include_router(resource_instance.router)
 
 
 class APIVersion(APIMixin):
