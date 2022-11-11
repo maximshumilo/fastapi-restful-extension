@@ -3,7 +3,7 @@
 ## 0.4.0
 - Add poetry
 - Add linters, formatters and pre-commit
-
+- Refactor class APIVersion. 
 
 ## 0.3.0
 - Add decorator route_settings
