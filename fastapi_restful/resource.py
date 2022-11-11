@@ -1,5 +1,5 @@
-from inspect import getmembers, ismethod, Parameter, Signature, signature, iscoroutinefunction
-from typing import List, Callable, Tuple, Dict, Any
+from inspect import Parameter, Signature, getmembers, iscoroutinefunction, ismethod, signature
+from typing import Any, Callable, Dict, List, Tuple
 
 from fastapi import APIRouter
 
@@ -25,7 +25,7 @@ class ManageSignature:
         Kwargs
         """
         sign = signature(func)
-        res = next(filter(lambda x: x.name == 'route_kwargs', sign.parameters.values()), {})
+        res = next(filter(lambda x: x.name == "route_kwargs", sign.parameters.values()), {})
         if res:
             return res.default
         return res
@@ -69,13 +69,13 @@ class ManageSignature:
         List with new params.
         """
         old_params = list(sign.parameters.values())
-        return [p.replace(kind=Parameter.POSITIONAL_OR_KEYWORD) for p in old_params if p.name != 'route_kwargs']
+        return [p.replace(kind=Parameter.POSITIONAL_OR_KEYWORD) for p in old_params if p.name != "route_kwargs"]
 
 
 class HTTPMethods:
     """The supported HTTP methods are described here."""
 
-    _HTTP_METHODS: tuple = ('head', 'options', 'get', 'post', 'patch', 'put', 'delete')
+    _HTTP_METHODS: tuple = ("head", "options", "get", "post", "patch", "put", "delete")
 
     def _get_route_handlers(self) -> List[Tuple[str, Callable]]:
         """
@@ -90,19 +90,26 @@ class HTTPMethods:
         )
         return list(filter_obj)
 
-    def head(self, **kwargs): ...
+    def head(self, **kwargs):
+        ...
 
-    def options(self, **kwargs): ...
+    def options(self, **kwargs):
+        ...
 
-    def get(self, **kwargs): ...
+    def get(self, **kwargs):
+        ...
 
-    def post(self, **kwargs): ...
+    def post(self, **kwargs):
+        ...
 
-    def patch(self, **kwargs): ...
+    def patch(self, **kwargs):
+        ...
 
-    def put(self, **kwargs): ...
+    def put(self, **kwargs):
+        ...
 
-    def delete(self, **kwargs): ...
+    def delete(self, **kwargs):
+        ...
 
 
 class Resource(HTTPMethods, ManageSignature):
@@ -110,7 +117,7 @@ class Resource(HTTPMethods, ManageSignature):
 
     router: APIRouter
     tag: str = None
-    path: str = ''
+    path: str = ""
 
     def __init__(self, path: str = None):
         """
@@ -153,7 +160,7 @@ class Resource(HTTPMethods, ManageSignature):
             kwargs = {"summary": method}
             kwargs.update(self.__get_route_kwargs__(handler))
             route_handler = self.__replace_signature__(handler)
-            self.router.add_api_route(path='', endpoint=route_handler, methods=[method.capitalize()], **kwargs)
+            self.router.add_api_route(path="", endpoint=route_handler, methods=[method.capitalize()], **kwargs)
 
     @property
     def _required_args(self) -> List[str]:
@@ -164,4 +171,4 @@ class Resource(HTTPMethods, ManageSignature):
         -------
         List with required arg names.
         """
-        return [item.strip('{}') for item in self.path.split('/') if item.startswith('{') and item.endswith('}')]
+        return [item.strip("{}") for item in self.path.split("/") if item.startswith("{") and item.endswith("}")]

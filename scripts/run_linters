@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -ex
+
+flake8 fastapi_restful tests
+black --check fastapi_restful tests
+isort --check-only fastapi_restful tests

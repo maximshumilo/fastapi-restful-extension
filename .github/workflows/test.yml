@@ -8,7 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
     env:
       OS: ${{ matrix.os }}
       PYTHON: '3.9'
@@ -18,15 +18,18 @@ jobs:
       uses: actions/setup-python@master
       with:
         python-version: 3.9
+    - name: Run linters
+      run: |
+        pip install --upgrade pip
+        pip install poetry
+        poetry install
+        poetry run ./scripts/run_linters
     - name: Generate coverage report
       run: |
         pip install --upgrade pip
-        pip install fastapi
-        pip install requests
-        pip install pytest
-        pip install pytest-asyncio
-        pip install pytest-cov
-        pytest --cov=./fastapi_restful --cov-report=xml
+        pip install poetry
+        poetry install
+        poetry run ./scripts/run_tests --cov=./fastapi_restful --cov-report=xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
