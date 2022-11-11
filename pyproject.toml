@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "fastapi-restful-extension"
-version = "0.4.0"
+version = "0.4.1"
 description = "Extension for make RESTful interfaces with FastAPI."
 authors = [
     "Shumilo Maksim <shumilo.mk@gmail.com>",
