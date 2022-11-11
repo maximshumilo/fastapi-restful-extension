@@ -39,12 +39,11 @@ Install package with pip from `pypi.org`
 $ pip install fastapi-restful-extension
 
 Collecting fastapi-restful-extension
-  Downloading fastapi_restful_extension-0.3.0-py3-none-any.whl (8.0 kB)
 ...
 ...
 ...
 Installing collected packages: fastapi-restful-extension
-Successfully installed fastapi-restful-extension-0.3.0
+Successfully installed fastapi-restful-extension-X.Y.Z
 ```
 
 ---
