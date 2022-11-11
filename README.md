@@ -9,6 +9,9 @@
         <img src="https://img.shields.io/pypi/v/fastapi-restful-extension?color=31c955&label=pypi%20package">
     </a>
     <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/fastapi-restful-extension?color=31c955">
+    <a href="https://pypi.org/project/fastapi-restful-extension/" target="_blank">
+        <img src="https://static.pepy.tech/personalized-badge/fastapi-restful-extension?period=total&units=international_system&left_color=grey&right_color=brightgreen&left_text=Downloads">
+    </a>
 </p>
 
 <p align="center">
