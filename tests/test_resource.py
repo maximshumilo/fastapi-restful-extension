@@ -47,7 +47,7 @@ def test_init_resource_include_methods(resource_type):
 
 def test_resource_required_args_in_path(resource_type):
     required_arg = "resource_id"
-    instance = resource_type(path='/test/{%s}' % required_arg)
+    instance = resource_type(path="/test/{%s}" % required_arg)
     assert required_arg in instance._required_args
     assert len(instance._required_args) == 1
 

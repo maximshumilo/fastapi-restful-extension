@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from pytest import fixture
 
-from fastapi_restful import Resource, RestAPI, APIVersion
+from fastapi_restful import APIVersion, Resource, RestAPI
 
 app = FastAPI()
 
@@ -10,8 +10,7 @@ app = FastAPI()
 @fixture
 def resource_type():
     class TestResource(Resource):
-        path = '/test'
-        pass
+        path = "/test"
 
     return TestResource
 
@@ -28,4 +27,4 @@ def rest_api_instance():
 
 @fixture
 def api_version_instance():
-    return APIVersion(version_prefix='/v1')
+    return APIVersion(version_prefix="/v1")
