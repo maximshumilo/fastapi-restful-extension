@@ -48,6 +48,7 @@ Documentation = "https://maximshumilo.github.io/fastapi-restful-extension/"
 [tool.poetry.dependencies]
 python = "^3.7"
 fastapi = ">=0.78.0"
+pre-commit = "^2.20.0"
 
 
 [tool.poetry.dev-dependencies]
