@@ -2,10 +2,10 @@
 
 name: Publish
 
-on:
-  push:
-   tags:        
-      - '*' 
+#on:
+#  push:
+#   tags:
+#      - '*'
 
 jobs:
   pubish:
@@ -19,8 +19,8 @@ jobs:
       - name: Build package
         run: |
           pip install --upgrade pip
-          pip install wheel setuptools
-          python setup.py sdist bdist_wheel
+          pip install poetry
+          poetry build
       - name: Publish package
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
