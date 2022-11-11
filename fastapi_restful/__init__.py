@@ -1,4 +1,4 @@
-from .api import RestAPI, APIVersion
+from .api import APIVersion, RestAPI
 from .resource import Resource
 from .utils import route_settings
 
