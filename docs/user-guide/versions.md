@@ -7,10 +7,11 @@ At the same time, the prefix specified during version initialization is added to
 As an example, let's add a version to the previous example from the [Minimal API](minimal-api.md) section.
 
 
-```python title="first_api.py" linenums="1" hl_lines="17-19 22 23"
+```python title="first_api.py" linenums="1" hl_lines="15-17 20 21 22"
 from fastapi import FastAPI
-from fastapi_restful import RestAPI, Resource
 from uvicorn import run
+
+from fastapi_restful import RestAPI, Resource, APIVersion
 
 app = FastAPI()
 api = RestAPI(app)
@@ -21,16 +22,16 @@ class FirstResource(Resource):
         return {'first': 'resource'}
 
 
-api.add_resource(FirstResource, path='/first-resource')
-
-
 class SecondResource(Resource):
     def get(self):
         return {'second': 'resource'}
 
-    
-v2 = api.create_version('v2')
+
+v2 = APIVersion(version_prefix='v2')
 v2.add_resource(SecondResource, path='/second-resource')
+api.include_api_version(api_version=v2)
+
+api.add_resource(FirstResource, path='/first-resource')
 api.apply()
 
 if __name__ == '__main__':
