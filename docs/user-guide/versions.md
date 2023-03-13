@@ -6,12 +6,11 @@ At the same time, the prefix specified during version initialization is added to
 ### Creating second version API
 As an example, let's add a version to the previous example from the [Minimal API](minimal-api.md) section.
 
-
 ```python title="first_api.py" linenums="1" hl_lines="15-17 20 21 22"
 from fastapi import FastAPI
 from uvicorn import run
 
-from fastapi_restful import RestAPI, Resource, APIVersion
+from fastapi_restful import RestAPI, Resource, RestAPIRouter
 
 app = FastAPI()
 api = RestAPI(app)
@@ -27,9 +26,9 @@ class SecondResource(Resource):
         return {'second': 'resource'}
 
 
-v2 = APIVersion(version_prefix='v2')
+v2 = RestAPIRouter(prefix='v2')
 v2.add_resource(SecondResource, path='/second-resource')
-api.include_api_version(api_version=v2)
+api.include_rest_api_router(rest_api_router=v2)
 
 api.add_resource(FirstResource, path='/first-resource')
 api.apply()
@@ -47,7 +46,7 @@ As a result, two routes will be registered:
 - `GET /api/v2/second-resource/`
 
 !!! note
-    Нou can get an instance of `APIVersion` using the `__getitem__` method from the `RestAPI` instance by a prefix.
+    Нou can get an instance of `RestAPIRouter` using the `__getitem__` method from the `RestAPI` instance by a prefix.
 
     ```python
     >>> api_v2 = api.create_version('v2')

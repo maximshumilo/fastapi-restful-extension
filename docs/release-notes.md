@@ -7,7 +7,7 @@
 
 ## 0.2.0
 - Rename Api class to RestAPI
-- Add APIMixin
+- Add BaseRestAPI
 - Add api version and method `create-version` to RestAPI
 
 ## 0.1.0

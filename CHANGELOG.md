@@ -6,7 +6,7 @@
 ## 0.4.1
 - Add poetry
 - Add linters, formatters and pre-commit
-- Refactor class APIVersion. 
+- Refactor class RestAPIRouter. 
 
 ## 0.3.0
 - Add decorator route_settings
@@ -15,7 +15,7 @@
 
 ## 0.2.0
 - Rename Api class to RestAPI
-- Add APIMixin
+- Add BaseRestAPI
 - Add api version and method `create-version` to RestAPI
 
 ## 0.1.0

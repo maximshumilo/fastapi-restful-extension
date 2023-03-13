@@ -30,33 +30,34 @@ class ManageSignature:
             return res.default
         return res
 
-    def __replace_signature__(self, func: Callable) -> Callable:
+    def _create_new_route_handler(self, func: Callable) -> Callable:
         """
-        Replace signature of func.
+        Create new route handler function with new kwargs
 
         Parameters
         ----------
-        func: Target func
+        func: Callable
+            Source func
 
         Returns
         -------
-        New function with new signature.
+        New function with new kwargs.
         """
 
-        def route_handler(*args, **kwargs):
+        def sync_route_handler(*args, **kwargs):
             return func(*args, **kwargs)
 
         async def async_route_handler(*args, **kwargs):
             return await func(*args, **kwargs)
 
-        new_func = async_route_handler if iscoroutinefunction(func) else route_handler
+        new_func = async_route_handler if iscoroutinefunction(func) else sync_route_handler
         sign = signature(func)
-        new_params = self.__gen_new_params__(sign)
+        new_params = self.__generate_new_params__(sign)
         new_func.__signature__ = sign.replace(parameters=new_params)
         return new_func
 
     @staticmethod
-    def __gen_new_params__(sign: Signature) -> List[Parameter]:
+    def __generate_new_params__(sign: Signature) -> List[Parameter]:
         """
         Generate list with new params for signature.
 
@@ -83,7 +84,7 @@ class HTTPMethods:
 
         Returns
         -------
-        List with data o route handlers.
+        List with data o route handler methods.
         """
         filter_obj = filter(
             lambda x: x[0] in self._HTTP_METHODS and is_overridden_func(x[1]), getmembers(self, predicate=ismethod)
@@ -149,17 +150,17 @@ class Resource(HTTPMethods, ManageSignature):
         """
         Include HTTP methods to router.
 
-        Get kwargs from implemented method (only for route), and replace signature of route_handler,
+        Get kwargs from implemented method (only for route), and replace signature of route func,
         then add api route to router.
 
         Returns
         -------
         None
         """
-        for method, handler in self._get_route_handlers():
-            kwargs = {"summary": method}
-            kwargs.update(self.__get_route_kwargs__(handler))
-            route_handler = self.__replace_signature__(handler)
+        for method, func in self._get_route_handlers():
+            route_kwargs = self.__get_route_kwargs__(func)
+            kwargs = {"summary": method, **route_kwargs}
+            route_handler = self._create_new_route_handler(func)
             self.router.add_api_route(path="", endpoint=route_handler, methods=[method.capitalize()], **kwargs)
 
     @property
