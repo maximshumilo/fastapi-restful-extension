@@ -56,7 +56,6 @@ def test_execute_func_with_new_signature(resource_type):
     assert True
 
 
-
 @pytest.mark.asyncio
 async def test_execute_func_with_new_signature_async(resource_type):
     assert True
