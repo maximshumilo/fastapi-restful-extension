@@ -67,7 +67,7 @@ class RestAPI(RestAPIRouter):
 
         Parameters
         ----------
-        path: Default prefix in url path.
+        path: Default prefix in url path
         """
         super().__init__(path)
         self.rest_api_routers: Dict[str, RestAPIRouter] = {}
