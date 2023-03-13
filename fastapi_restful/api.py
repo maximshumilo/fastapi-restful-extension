@@ -13,7 +13,7 @@ class RestAPIRouter:
 
     def __init__(self, path: str):
         self.fastapi = FastAPI()
-        self.path = f'/{self._strip_path(path)}'
+        self.path = f"/{self._strip_path(path)}"
 
     def __str__(self) -> str:
         return self.path

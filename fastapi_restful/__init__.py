@@ -1,4 +1,4 @@
-from .api import RestAPIRouter, RestAPI
+from .api import RestAPI, RestAPIRouter
 from .resource import Resource
 from .utils import route_settings
 
