@@ -22,9 +22,9 @@ def fastapi_test_client():
 
 @fixture
 def rest_api_instance():
-    return RestAPI(app)
+    return RestAPI()
 
 
 @fixture
 def api_version_instance():
-    return RestAPIRouter(prefix="/v1")
+    return RestAPIRouter(path="/v1")
