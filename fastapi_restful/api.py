@@ -6,7 +6,7 @@ from starlette.routing import Mount
 from .resource import Resource
 
 
-class RestAPIRouter:
+class RestAPI:
     """
     A class specific version API.
     """
@@ -58,7 +58,7 @@ class RestAPIRouter:
         self.fastapi.include_router(resource_instance.router)
 
 
-class RestAPI(RestAPIRouter):
+class RESTExtension(RestAPI):
     """Main class for create RESTful-API."""
 
     def __init__(self, path: Optional[str] = "/api"):
@@ -70,9 +70,9 @@ class RestAPI(RestAPIRouter):
         path: Default prefix in url path
         """
         super().__init__(path)
-        self.rest_api_routers: Dict[str, RestAPIRouter] = {}
+        self.api_entrypoints_map: Dict[str, RESTExtension] = {}
 
-    def __getitem__(self, item: str) -> Optional[RestAPIRouter]:
+    def __getitem__(self, item: str) -> Optional[RestAPI]:
         """
         Get instance API by path.
 
@@ -82,13 +82,13 @@ class RestAPI(RestAPIRouter):
 
         Returns
         -------
-        Instance of RestAPIRouter or None
+        Instance of RESTExtension or None
         """
-        return self.rest_api_routers.get(self.path)
+        return self.api_entrypoints_map.get(self.path)
 
     def init(self, fastapi_app: FastAPI) -> None:
         """
-        Include FastAPI app of RestAPI to main FastAPI app.
+        Include FastAPI app of RESTExtension to main FastAPI app.
 
         Returns
         -------
@@ -96,17 +96,17 @@ class RestAPI(RestAPIRouter):
         """
         fastapi_app.mount(path=self.path, app=self.fastapi)
 
-    def include_rest_api_router(self, rest_api_router: RestAPIRouter) -> None:
+    def add_api(self, api: RestAPI) -> None:
         """
         Include API version to main router.
 
         Parameters
         ----------
-        rest_api_router
-            Instance of RestAPIRouter with included resources.
+        api
+            Instance of RESTExtension with included resources.
         """
-        rest_api_path = rest_api_router.path
-        if rest_api_path in self.rest_api_routers:
+        rest_api_path = api.path
+        if rest_api_path in self.api_entrypoints_map:
             raise AssertionError(f"This version is exist: {rest_api_path}")
-        self.rest_api_routers[rest_api_path] = rest_api_router
-        self.fastapi.mount(path=rest_api_path, app=rest_api_router.fastapi)
+        self.api_entrypoints_map[rest_api_path] = api
+        self.fastapi.mount(path=rest_api_path, app=api.fastapi)

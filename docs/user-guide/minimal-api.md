@@ -21,11 +21,11 @@ Successfully installed asgiref-3.5.2 h11-0.13.0 uvicorn-0.17.6
 
 ```python title="first_api.py" linenums="1" hl_lines="5 6"
 from fastapi import FastAPI
-from fastapi_restful import RestAPI, Resource
+from fastapi_restful import RESTExtension, Resource
 from uvicorn import run
 
 app = FastAPI()
-api = RestAPI(app)
+api = RESTExtension(app)
 
 
 class FirstResource(Resource):
@@ -44,16 +44,16 @@ The FastAPI application will be created and routes with methods described in the
 
 !!! note
 
-    `/api/...` - this prefix is added by default to the `RestAPI` instance. <br>
-    If you don't need it, specify `prefix=None` when initializing `RestAPI`
+    `/api/...` - this prefix is added by default to the `RESTExtension` instance. <br>
+    If you don't need it, specify `prefix=None` when initializing `RESTExtension`
 
 ```python title="first_api.py" linenums="1" hl_lines="9-11 14 15"
 from fastapi import FastAPI
-from fastapi_restful import RestAPI, Resource
+from fastapi_restful import RESTExtension, Resource
 from uvicorn import run
 
 app = FastAPI()
-api = RestAPI(app)
+api = RESTExtension(app)
 
 
 class FirstResource(Resource):

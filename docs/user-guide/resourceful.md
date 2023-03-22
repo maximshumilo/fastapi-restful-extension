@@ -15,12 +15,12 @@ Consider an example with posts.<br>
 from uuid import UUID, uuid4
 
 from fastapi import FastAPI, Response, HTTPException, Query
-from fastapi_restful import RestAPI, Resource
+from fastapi_restful import RESTExtension, Resource
 from pydantic import BaseModel, Field
 from uvicorn import run
 
 app = FastAPI()
-api = RestAPI(app)
+api = RESTExtension(app)
 posts = []
 
 
@@ -175,7 +175,7 @@ Here it can also be done using the `route_settings` decorator.
 from uuid import UUID, uuid4
 
 from fastapi import FastAPI, Response, HTTPException, Query
-from fastapi_restful import RestAPI, Resource, route_settings
+from fastapi_restful import RESTExtension, Resource, route_settings
 from pydantic import BaseModel, Field
 from uvicorn import run
 

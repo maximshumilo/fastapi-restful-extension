@@ -1,8 +1,8 @@
-from fastapi_restful import RestAPI
+from fastapi_restful import RESTExtension
 
 
 def test__init_rest_api__success():
-    api = RestAPI()
+    api = RESTExtension()
     assert api.path == "/api"
 
 

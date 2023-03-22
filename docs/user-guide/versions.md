@@ -10,10 +10,10 @@ As an example, let's add a version to the previous example from the [Minimal API
 from fastapi import FastAPI
 from uvicorn import run
 
-from fastapi_restful import RestAPI, Resource, RestAPIRouter
+from fastapi_restful import RESTExtension, Resource, RESTExtension
 
 app = FastAPI()
-api = RestAPI(app)
+api = RESTExtension(app)
 
 
 class FirstResource(Resource):
@@ -26,9 +26,9 @@ class SecondResource(Resource):
         return {'second': 'resource'}
 
 
-v2 = RestAPIRouter(prefix='v2')
+v2 = RESTExtension(prefix='v2')
 v2.add_resource(SecondResource, path='/second-resource')
-api.include_rest_api_router(rest_api_router=v2)
+api.add_rest_api()
 
 api.add_resource(FirstResource, path='/first-resource')
 api.apply()
@@ -46,7 +46,7 @@ As a result, two routes will be registered:
 - `GET /api/v2/second-resource/`
 
 !!! note
-    Нou can get an instance of `RestAPIRouter` using the `__getitem__` method from the `RestAPI` instance by a prefix.
+    Нou can get an instance of `RESTExtension` using the `__getitem__` method from the `RESTExtension` instance by a prefix.
 
     ```python
     >>> api_v2 = api.create_version('v2')
