@@ -6,17 +6,17 @@
 ## 0.4.1
 - Add poetry
 - Add linters, formatters and pre-commit
-- Refactor class APIVersion. 
+- Refactor class RESTExtension. 
 
 ## 0.3.0
 - Add decorator route_settings
-- Add method apply for class RestAPI
+- Add method apply for class RESTExtension
 - Fix bugs and update logic init API
 
 ## 0.2.0
-- Rename Api class to RestAPI
-- Add APIMixin
-- Add api version and method `create-version` to RestAPI
+- Rename Api class to RESTExtension
+- Add BaseRestAPI
+- Add api version and method `create-version` to RESTExtension
 
 ## 0.1.0
 - Add Resource class

@@ -1,16 +1,26 @@
-from typing import Dict, Optional, Type, Union
+from typing import Dict, Optional, Type
 
-from fastapi import APIRouter, FastAPI
+from fastapi import FastAPI
+from starlette.routing import Mount
 
 from .resource import Resource
 
 
-class APIMixin:
-    router: APIRouter
+class RestAPI:
+    """
+    A class specific version API.
+    """
+
+    def __init__(self, path: str):
+        self.app = FastAPI()
+        self.path = f"/{self._strip_path(path)}"
+
+    def __str__(self) -> str:
+        return self.path
 
     @staticmethod
-    def _strip_prefix(prefix: Optional[str]) -> str:
-        return prefix.strip("/") if prefix is not None else ""
+    def _strip_path(path: Optional[str]) -> str:
+        return path.strip("/") if path is not None else ""
 
     @property
     def urls(self) -> dict:
@@ -22,7 +32,9 @@ class APIMixin:
         Url map
         """
         urls = dict()
-        for route in self.router.routes:
+        for route in self.app.routes:
+            if isinstance(route, Mount):
+                continue
             urls.setdefault(route.path, set())
             urls[route.path].update(route.methods)
         return urls
@@ -43,100 +55,58 @@ class APIMixin:
         None
         """
         resource_instance = resource(path)
-        self.router.include_router(resource_instance.router)
+        self.app.include_router(resource_instance.router)
 
 
-class APIVersion(APIMixin):
-    """
-    A class specific version API.
-    """
-
-    def __init__(self, version_prefix: str):
-        prefix = self._strip_prefix(version_prefix)
-        self.router = APIRouter(prefix=f"/{prefix}")
-
-    def __str__(self) -> str:
-        return self.router.prefix
-
-
-class RestAPI(APIMixin):
+class RESTExtension(RestAPI):
     """Main class for create RESTful-API."""
 
-    router: Union[APIRouter, FastAPI]
-
-    def __init__(self, fastapi_app: FastAPI, prefix: Optional[str] = "/api"):
+    def __init__(self, path: Optional[str] = "/api"):
         """
         Init class.
 
         Parameters
         ----------
-        fastapi_app: instance of FastAPI
-        prefix: Default prefix in url path.
+        path: Default prefix in url path
         """
-        self._fastapi: FastAPI = fastapi_app
-        self._prefix: str = prefix
-        self._versions: Dict[str, APIVersion] = {}
-        self.__init_main_router__()
+        super().__init__(path)
+        self.rest_api_map: Dict[str, RestAPI] = {}
 
-    def __getitem__(self, item: str) -> Optional[APIVersion]:
+    def __getitem__(self, item: str) -> Optional[RestAPI]:
         """
-        Get instance API by prefix version.
+        Get instance API by path.
 
         Parameters
         ----------
-        item: Prefix version
+        item: path
 
         Returns
         -------
-        Instance API or None
+        Instance of RESTExtension or None
         """
-        prefix = self._strip_prefix(item)
-        return self._versions.get(f"/{prefix}")
+        return self.rest_api_map.get(self.path)
 
-    def __init_main_router__(self) -> None:
+    def mount_to_app(self, fastapi_app: FastAPI) -> None:
         """
-        Init main router.
-
-        Returns
-        -------
-        None
-        """
-        prefix = self._strip_prefix(self._prefix)
-        if prefix:
-            router = APIRouter(prefix=f"/{prefix}")
-        else:
-            router = self._fastapi
-        self.router = router
-
-    @property
-    def versions(self) -> Dict[str, APIVersion]:
-        """Versions map"""
-        return self._versions
-
-    def apply(self) -> None:
-        """
-        Include new api urls to FastAPI app.
+        Include FastAPI app of RESTExtension to main FastAPI app.
 
         Returns
         -------
         None
         """
-        for router in self._versions.values():
-            self.router.include_router(router.router)
-        if isinstance(self.router, APIRouter):
-            self._fastapi.include_router(self.router)
+        fastapi_app.mount(path=self.path, app=self.app)
 
-    def include_api_version(self, api_version: APIVersion) -> None:
+    def add_api(self, api: RestAPI) -> None:
         """
         Include API version to main router.
 
         Parameters
         ----------
-        api_version
-            Instance of APIVersion with included resources.
+        api
+            Instance of RESTExtension with included resources.
         """
-        prefix = api_version.router.prefix
-        if prefix in self._versions:
-            raise AssertionError(f"This version is exist: {prefix}")
-        self._versions[prefix] = api_version
-        self.router.include_router(api_version.router)
+        rest_api_path = api.path
+        if rest_api_path in self.rest_api_map:
+            raise AssertionError(f"RestAPI with this prefix is exist: {rest_api_path}")
+        self.rest_api_map[rest_api_path] = api
+        self.app.mount(path=rest_api_path, app=api.app)

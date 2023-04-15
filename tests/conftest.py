@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from pytest import fixture
 
-from fastapi_restful import APIVersion, Resource, RestAPI
+from fastapi_restful import Resource, RESTExtension
 
 app = FastAPI()
 
@@ -22,9 +22,9 @@ def fastapi_test_client():
 
 @fixture
 def rest_api_instance():
-    return RestAPI(app)
+    return RESTExtension()
 
 
 @fixture
 def api_version_instance():
-    return APIVersion(version_prefix="/v1")
+    return RESTExtension(path="/v1")
