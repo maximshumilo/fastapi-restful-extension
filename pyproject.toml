@@ -62,6 +62,7 @@ autoflake = "^2.0"
 isort = "^5"
 mypy = ">=0.971"
 pre-commit = "^3"
+httpx = "^0.24.0"
 
 
 [tool.black]
