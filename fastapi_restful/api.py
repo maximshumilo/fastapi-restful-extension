@@ -84,7 +84,7 @@ class RESTExtension(RestAPI):
         -------
         Instance of RESTExtension or None
         """
-        return self.rest_api_map.get(self.path)
+        return self.rest_api_map.get(item)
 
     def mount_to_app(self, fastapi_app: FastAPI) -> None:
         """
