@@ -1,4 +1,4 @@
-from .api import RESTExtension, RestAPI
+from .api import RestAPI, RESTExtension
 from .resource import Resource
 from .utils import route_settings
 
