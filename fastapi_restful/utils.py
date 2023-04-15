@@ -26,7 +26,7 @@ def route_settings(**kwargs) -> Callable:
     Parameters
     ----------
     kwargs: Kwargs for add_api_route.
-            See descriptions for all kwargs in `fastapi.APIRouter.add_api_route`.
+            See descriptions for all kwargs in `app.APIRouter.add_api_route`.
 
     Returns
     -------

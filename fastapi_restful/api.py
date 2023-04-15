@@ -12,7 +12,7 @@ class RestAPI:
     """
 
     def __init__(self, path: str):
-        self.fastapi = FastAPI()
+        self.app = FastAPI()
         self.path = f"/{self._strip_path(path)}"
 
     def __str__(self) -> str:
@@ -32,7 +32,7 @@ class RestAPI:
         Url map
         """
         urls = dict()
-        for route in self.fastapi.routes:
+        for route in self.app.routes:
             if isinstance(route, Mount):
                 continue
             urls.setdefault(route.path, set())
@@ -55,7 +55,7 @@ class RestAPI:
         None
         """
         resource_instance = resource(path)
-        self.fastapi.include_router(resource_instance.router)
+        self.app.include_router(resource_instance.router)
 
 
 class RESTExtension(RestAPI):
@@ -70,7 +70,7 @@ class RESTExtension(RestAPI):
         path: Default prefix in url path
         """
         super().__init__(path)
-        self.api_entrypoints_map: Dict[str, RESTExtension] = {}
+        self.rest_api_map: Dict[str, RestAPI] = {}
 
     def __getitem__(self, item: str) -> Optional[RestAPI]:
         """
@@ -84,9 +84,9 @@ class RESTExtension(RestAPI):
         -------
         Instance of RESTExtension or None
         """
-        return self.api_entrypoints_map.get(self.path)
+        return self.rest_api_map.get(self.path)
 
-    def init(self, fastapi_app: FastAPI) -> None:
+    def mount_to_app(self, fastapi_app: FastAPI) -> None:
         """
         Include FastAPI app of RESTExtension to main FastAPI app.
 
@@ -94,7 +94,7 @@ class RESTExtension(RestAPI):
         -------
         None
         """
-        fastapi_app.mount(path=self.path, app=self.fastapi)
+        fastapi_app.mount(path=self.path, app=self.app)
 
     def add_api(self, api: RestAPI) -> None:
         """
@@ -106,7 +106,7 @@ class RESTExtension(RestAPI):
             Instance of RESTExtension with included resources.
         """
         rest_api_path = api.path
-        if rest_api_path in self.api_entrypoints_map:
-            raise AssertionError(f"This version is exist: {rest_api_path}")
-        self.api_entrypoints_map[rest_api_path] = api
-        self.fastapi.mount(path=rest_api_path, app=api.fastapi)
+        if rest_api_path in self.rest_api_map:
+            raise AssertionError(f"RestAPI with this prefix is exist: {rest_api_path}")
+        self.rest_api_map[rest_api_path] = api
+        self.app.mount(path=rest_api_path, app=api.app)
