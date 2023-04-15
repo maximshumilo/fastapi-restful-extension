@@ -1,9 +1,9 @@
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 import pytest
 from fastapi import FastAPI
 
-from fastapi_restful import RESTExtension, RestAPI
+from fastapi_restful import RESTExtension, RestAPI, Resource
 
 
 class TestRESTExtension:
@@ -56,3 +56,32 @@ class TestRESTExtension:
             api.add_api(api=rest_api)
         assert rest_api.path in api.rest_api_map
         mock.assert_not_called()
+
+
+class TestRestAPI:
+    def test__init__success(self):
+        path = '/path'
+        api = RestAPI(path=path)
+        assert api.path == path
+
+    def test__init__success__without_slash(self):
+        path = 'path'
+        api = RestAPI(path=path)
+        assert api.path.startswith('/')
+
+    def test__str__equal_path(self):
+        path = 'path'
+        api = RestAPI(path=path)
+        assert str(api) == api.path
+
+    def test__strip_path__success(self):
+        path = '/path'
+        path = RestAPI._strip_path(path=path)
+        assert not path.startswith('/')
+        assert '/' not in path
+
+    def test__strip_path__success__path_is_none(self):
+        api = RestAPI(path="")
+        with patch.object(api.app, 'include_router') as mock:
+            api.add_resource(resource=Resource, path='/resource_path')
+        mock.assert_called()

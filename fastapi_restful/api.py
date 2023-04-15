@@ -1,7 +1,6 @@
 from typing import Dict, Optional, Type
 
 from fastapi import FastAPI
-from starlette.routing import Mount
 
 from .resource import Resource
 
@@ -21,23 +20,6 @@ class RestAPI:
     @staticmethod
     def _strip_path(path: Optional[str]) -> str:
         return path.strip("/") if path is not None else ""
-
-    @property
-    def urls(self) -> dict:
-        """
-        Registered urls and HTTP methods.
-
-        Returns
-        -------
-        Url map
-        """
-        urls = dict()
-        for route in self.app.routes:
-            if isinstance(route, Mount):
-                continue
-            urls.setdefault(route.path, set())
-            urls[route.path].update(route.methods)
-        return urls
 
     def add_resource(self, resource: Type[Resource], path: str = None) -> None:
         """
