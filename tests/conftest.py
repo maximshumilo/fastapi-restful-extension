@@ -1,3 +1,5 @@
+from inspect import signature
+
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from pytest import fixture
@@ -10,9 +12,21 @@ app = FastAPI()
 @fixture
 def resource_type():
     class TestResource(Resource):
+        tag = 'my_tag'
         path = "/test"
 
     return TestResource
+
+@fixture
+def resource_instance():
+    return Resource()
+
+@fixture
+def signature_with_value():
+    def my_handler(my_arg='value'):
+        pass
+
+    return signature(my_handler)
 
 
 @fixture

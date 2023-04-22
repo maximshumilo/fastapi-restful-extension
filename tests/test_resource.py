@@ -1,61 +1,124 @@
+from inspect import Signature
+from typing import Type
+from unittest.mock import patch
+
 import pytest
-from fastapi import APIRouter
+
+from fastapi_restful.resource import ManageSignature, Resource, HTTPMethods
 
 
-def test_init_resource_default_tag(resource_type):
-    instance = resource_type()
-    assert instance.tag == resource_type.__name__
+class TestManageSignature:
+
+    def test__get_route_kwargs__success(self):
+        default_value = 1
+
+        def my_handler(route_kwargs=default_value):
+            pass
+
+        result = ManageSignature.__get_default_value_of_route_kwargs__(func=my_handler)
+        assert result == default_value
+
+    def test__get_route_kwargs__success__empty(self):
+        def my_handler():
+            pass
+
+        result = ManageSignature.__get_default_value_of_route_kwargs__(func=my_handler)
+        assert result == {}
+
+    def test__create_new_route_handler__success_sync(self, resource_instance: Resource):
+        def my_handler():
+            pass
+
+        with patch.object(resource_instance, '__generate_new_params__', return_value=[]):
+            result = resource_instance._create_new_route_handler(func=my_handler)
+        assert result.__name__ == 'sync_route_handler'
+        assert result() is None
+
+    @pytest.mark.asyncio
+    async def test__create_new_route_handler__success_async(self, resource_instance: Resource):
+        async def my_handler():
+            pass
+
+        with patch.object(resource_instance, '__generate_new_params__', return_value=[]):
+            result = resource_instance._create_new_route_handler(func=my_handler)
+        assert result.__name__ == 'async_route_handler'
+        assert await result() is None
+
+    def test__generate_new_params__success(self, signature_with_value: Signature):
+        result = ManageSignature.__generate_new_params__(sign=signature_with_value)
+        assert result
+        assert result[0].name == 'my_arg'
+        assert result[0].default == 'value'
 
 
-def test_init_resource_custom_tag(resource_type):
-    custom_tag = "Test custom tag"
-    resource_type.tag = custom_tag
-    instance = resource_type()
-    assert instance.tag == custom_tag
+class TestHTTPMethods:
+
+    def test__get_overridden_route_handlers__success(self):
+
+        class MyClass(HTTPMethods):
+            def get(self, **kwargs):
+                pass
+
+        instance = MyClass()
+        result = instance._get_overridden_route_handlers()
+        assert instance.get == result[0][1]
+
+    def test__get_overridden_route_handlers__failed__not_http(self):
+
+        class MyClass(HTTPMethods):
+            def custom_method(self, **kwargs):
+                pass
+
+        instance = MyClass()
+        result = instance._get_overridden_route_handlers()
+        assert not result
+
+    def test__call_abs_http_methods__success(self):
+        class MyClass(HTTPMethods):
+            pass
+        instance = MyClass()
 
 
-def test_init_resource_default_path(resource_type):
-    default_path = resource_type.path
-    instance = resource_type()
-    assert instance.path == default_path
+        for http_method in instance._HTTP_METHODS:
+            method = getattr(instance, http_method)
+            result = method()
+            assert not result
 
 
-def test_init_resource_custom_path(resource_type):
-    custom_path = "/my/path"
-    instance = resource_type(custom_path)
-    assert instance.path == custom_path
+class TestResource:
 
+    def test__init__success(self):
+        with patch.object(Resource, '__init_router__') as init_router__mock:
+            instance = Resource()
+        assert not instance.tag == Resource.tag
+        assert instance.tag == Resource.__name__
+        assert instance.path == ''
+        init_router__mock.assert_called()
 
-def test_init_resource_init_router(resource_type):
-    instance = resource_type()
-    assert instance.router is not None
-    assert isinstance(instance.router, APIRouter)
-    assert instance.router.tags == [resource_type.__name__]
-    assert instance.router.prefix == resource_type.path
+    def test__init__success__with_tag(self, resource_type: Type[Resource]):
+        with patch.object(resource_type, '__init_router__') as init_router__mock:
+            instance = resource_type()
+        assert instance.tag == resource_type.tag
+        assert instance.path == resource_type.path
+        init_router__mock.assert_called()
 
+    def test__init_router__success(self, resource_instance: Resource):
+        with patch.object(resource_instance, '__include_methods__') as init_router__mock:
+            before_router = resource_instance.router
+            resource_instance.__init_router__()
+            after_router = resource_instance.router
+        assert before_router is not after_router
+        init_router__mock.assert_called()
 
-def test_init_resource_include_methods(resource_type):
-    def get(self, **kwargs):
-        return {}
-
-    instance_before = resource_type()
-    assert len(instance_before.router.routes) == 0
-    resource_type.get = get
-    instance = resource_type()
-    assert len(instance.router.routes) == 1
-
-
-def test_resource_required_args_in_path(resource_type):
-    required_arg = "resource_id"
-    instance = resource_type(path="/test/{%s}" % required_arg)
-    assert required_arg in instance._required_args
-    assert len(instance._required_args) == 1
-
-
-def test_execute_func_with_new_signature(resource_type):
-    assert True
-
-
-@pytest.mark.asyncio
-async def test_execute_func_with_new_signature_async(resource_type):
-    assert True
+    def test__include_methods__success(self, resource_instance: Resource):
+        def my_handler():
+            pass
+        overridden_handlers = [('get', my_handler)]
+        with patch.object(resource_instance, '_get_overridden_route_handlers', return_value=overridden_handlers), \
+             patch.object(resource_instance, '__get_default_value_of_route_kwargs__', return_value={}) as mock_1, \
+             patch.object(resource_instance, '_create_new_route_handler') as mock_2, \
+             patch.object(resource_instance.router, 'add_api_route') as mock_3:
+            resource_instance.__include_methods__()
+        mock_1.assert_called()
+        mock_2.assert_called_with(my_handler)
+        mock_3.assert_called()
