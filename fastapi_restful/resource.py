@@ -12,23 +12,22 @@ class ManageSignature:
     _required_args: List[str]
 
     @staticmethod
-    def __get_route_kwargs__(func: Callable) -> Dict[str, Any]:
+    def __get_default_value_of_route_kwargs__(func: Callable) -> Dict[str, Any]:
         """
-        Get default values of route_kwargs from func.
+        Get default values of route_kwargs from target func.
 
         Parameters
         ----------
-        func: Target func
+        func:
+            Target func
 
         Returns
         -------
-        Kwargs
+        Default value of param `route_kwargs` from target func.
         """
         sign = signature(func)
         res = next(filter(lambda x: x.name == "route_kwargs", sign.parameters.values()), {})
-        if res:
-            return res.default
-        return res
+        return getattr(res, "default", {})
 
     def _create_new_route_handler(self, func: Callable) -> Callable:
         """
@@ -78,7 +77,7 @@ class HTTPMethods:
 
     _HTTP_METHODS: tuple = ("head", "options", "get", "post", "patch", "put", "delete")
 
-    def _get_route_handlers(self) -> List[Tuple[str, Callable]]:
+    def _get_overridden_route_handlers(self) -> List[Tuple[str, Callable]]:
         """
         Get route handler functions.
 
@@ -157,11 +156,11 @@ class Resource(HTTPMethods, ManageSignature):
         -------
         None
         """
-        for method, func in self._get_route_handlers():
-            route_kwargs = self.__get_route_kwargs__(func)
-            kwargs = {"summary": method, **route_kwargs}
-            route_handler = self._create_new_route_handler(func)
-            self.router.add_api_route(path="", endpoint=route_handler, methods=[method.capitalize()], **kwargs)
+        for method_name, method_callable in self._get_overridden_route_handlers():
+            route_kwargs = self.__get_default_value_of_route_kwargs__(method_callable)
+            kwargs = {"summary": method_name, **route_kwargs}
+            route_handler = self._create_new_route_handler(method_callable)
+            self.router.add_api_route(path="", endpoint=route_handler, methods=[method_name.capitalize()], **kwargs)
 
     @property
     def _required_args(self) -> List[str]:

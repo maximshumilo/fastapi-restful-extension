@@ -31,7 +31,7 @@
 FastAPI-RESTful-Extension has the following dependencies:
 
 - FastAPI <= `0.78.0`
-- Python version: `3.7, 3.8, 3.9` or `3.10`
+- Python version: `3.8.1 <= your version < 4.0`
 
 ---
 
