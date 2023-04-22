@@ -27,7 +27,7 @@ class ManageSignature:
         """
         sign = signature(func)
         res = next(filter(lambda x: x.name == "route_kwargs", sign.parameters.values()), {})
-        return getattr(res, 'default', {})
+        return getattr(res, "default", {})
 
     def _create_new_route_handler(self, func: Callable) -> Callable:
         """

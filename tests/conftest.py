@@ -12,18 +12,20 @@ app = FastAPI()
 @fixture
 def resource_type():
     class TestResource(Resource):
-        tag = 'my_tag'
+        tag = "my_tag"
         path = "/test"
 
     return TestResource
+
 
 @fixture
 def resource_instance():
     return Resource()
 
+
 @fixture
 def signature_with_value():
-    def my_handler(my_arg='value'):
+    def my_handler(my_arg="value"):
         pass
 
     return signature(my_handler)

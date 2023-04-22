@@ -31,9 +31,9 @@ def test__is_overridden_func__fail():
 
 
 def test__decorator_route_settings__success():
-    @route_settings(my_arg='my_value')
+    @route_settings(my_arg="my_value")
     def foo():
         pass
 
     sign_of_foo = signature(foo)
-    assert sign_of_foo.parameters.get('route_kwargs')
+    assert sign_of_foo.parameters.get("route_kwargs")
